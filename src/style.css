@@ -1,0 +1,219 @@
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+.layout-overlay {
+  display: none;
+}
+
+.layout-sidebar {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ebeef5;
+  background-color: #f5f7fa;
+}
+
+.layout-sidebar-header {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+}
+
+.layout-collapse-btn {
+  --el-button-bg-color: transparent;
+  --el-button-border-color: transparent;
+}
+
+.layout-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: #303133;
+  white-space: nowrap;
+}
+
+.layout-menu {
+  border-right: none;
+  height: 100%;
+  overflow: hidden;
+  transition: width 0.2s ease;
+}
+
+.layout-content {
+  flex: 1;
+  padding: 16px 24px;
+  overflow: auto;
+}
+
+.layout-content h2 {
+  margin-top: 0;
+}
+
+/* 美化菜单（通过 :deep 影响 Element Plus 内部结构） */
+.layout-menu :deep(.el-menu) {
+  border-right: none !important;
+  background: transparent;
+}
+
+.layout-menu :deep(.el-menu-item),
+.layout-menu :deep(.el-sub-menu__title) {
+  border-radius: 10px;
+  margin: 2px 8px;
+}
+
+.layout-menu :deep(.el-menu-item:hover),
+.layout-menu :deep(.el-sub-menu__title:hover) {
+  background: rgba(64, 158, 255, 0.08) !important;
+}
+
+.layout-menu :deep(.el-menu-item.is-active) {
+  background: rgba(64, 158, 255, 0.12) !important;
+  color: #2b6cff !important;
+}
+
+.layout-menu :deep(.el-sub-menu__title.is-active) {
+  color: #2b6cff !important;
+}
+
+.layout-menu-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.layout-menu-icon {
+  font-size: 16px;
+  flex: 0 0 auto;
+}
+
+.layout-menu-text {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    height: 100dvh;
+  }
+
+  .layout-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 19;
+  }
+
+  .layout-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100dvh;
+    border-right: 1px solid #ebeef5;
+    z-index: 20;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  }
+
+  .layout-sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .layout-content {
+    padding: 12px 12px;
+  }
+
+  .mobile-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0 12px;
+    background: white;
+  }
+
+  .mobile-menu-btn {
+    --el-button-bg-color: transparent;
+    --el-button-border-color: transparent;
+  }
+
+  .mobile-topbar-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: #303133;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ---- 全局移动端：文档式演示页容器 ---- */
+  .demo-page-shell {
+    padding: 0 12px !important;
+  }
+
+  .aistream-content,
+  .intro-content,
+  .tag-content,
+  .fence-content,
+  .container-content,
+  .progress-content,
+  .thinking-content {
+    padding: 12px 0 20px !important;
+  }
+
+  /* ---- 全局移动端：Markdown 内容不溢出 ---- */
+  .markdown-body {
+    word-break: break-word;
+  }
+
+  .markdown-body img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .markdown-body pre,
+  .demo-layout__pre,
+  .tag-code,
+  .fence-core,
+  .container-core,
+  .progress-core,
+  .thinking-core,
+  .fence-code__pre {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* markdown 表格在手机端横向滚动 */
+  .markdown-body table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Element Plus 表格/描述列表在窄屏更紧凑 */
+  .el-table,
+  .el-descriptions {
+    width: 100%;
+  }
+}

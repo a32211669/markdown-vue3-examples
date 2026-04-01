@@ -1,0 +1,210 @@
+{
+  "hash": "d78c310e",
+  "configHash": "29813d48",
+  "lockfileHash": "d2675aaa",
+  "browserHash": "f96c2346",
+  "optimized": {
+    "@element-plus/icons-vue": {
+      "src": "../../node_modules/@element-plus/icons-vue/dist/index.js",
+      "file": "@element-plus_icons-vue.js",
+      "fileHash": "ea9bf510",
+      "needsInterop": false
+    },
+    "echarts": {
+      "src": "../../node_modules/echarts/index.js",
+      "file": "echarts.js",
+      "fileHash": "4075674a",
+      "needsInterop": false
+    },
+    "element-plus": {
+      "src": "../../node_modules/element-plus/es/index.mjs",
+      "file": "element-plus.js",
+      "fileHash": "1dc1e50e",
+      "needsInterop": false
+    },
+    "element-plus/es/locale/lang/zh-cn": {
+      "src": "../../node_modules/element-plus/es/locale/lang/zh-cn.mjs",
+      "file": "element-plus_es_locale_lang_zh-cn.js",
+      "fileHash": "b057b229",
+      "needsInterop": false
+    },
+    "markdown-it": {
+      "src": "../../node_modules/markdown-it/index.mjs",
+      "file": "markdown-it.js",
+      "fileHash": "25e7608b",
+      "needsInterop": false
+    },
+    "markdown-vue3": {
+      "src": "../../node_modules/markdown-vue3/dist/markdown-vue3.es.js",
+      "file": "markdown-vue3.js",
+      "fileHash": "2107ee89",
+      "needsInterop": false
+    },
+    "ol/Feature": {
+      "src": "../../node_modules/ol/Feature.js",
+      "file": "ol_Feature.js",
+      "fileHash": "9e080c92",
+      "needsInterop": false
+    },
+    "ol/Map": {
+      "src": "../../node_modules/ol/Map.js",
+      "file": "ol_Map.js",
+      "fileHash": "27337106",
+      "needsInterop": false
+    },
+    "ol/View": {
+      "src": "../../node_modules/ol/View.js",
+      "file": "ol_View.js",
+      "fileHash": "8440be29",
+      "needsInterop": false
+    },
+    "ol/geom/Polygon": {
+      "src": "../../node_modules/ol/geom/Polygon.js",
+      "file": "ol_geom_Polygon.js",
+      "fileHash": "1d55ebfc",
+      "needsInterop": false
+    },
+    "ol/layer/Tile": {
+      "src": "../../node_modules/ol/layer/Tile.js",
+      "file": "ol_layer_Tile.js",
+      "fileHash": "17d7ade9",
+      "needsInterop": false
+    },
+    "ol/layer/Vector": {
+      "src": "../../node_modules/ol/layer/Vector.js",
+      "file": "ol_layer_Vector.js",
+      "fileHash": "038eaab9",
+      "needsInterop": false
+    },
+    "ol/proj": {
+      "src": "../../node_modules/ol/proj.js",
+      "file": "ol_proj.js",
+      "fileHash": "fea87888",
+      "needsInterop": false
+    },
+    "ol/source/OSM": {
+      "src": "../../node_modules/ol/source/OSM.js",
+      "file": "ol_source_OSM.js",
+      "fileHash": "10cbb174",
+      "needsInterop": false
+    },
+    "ol/source/Vector": {
+      "src": "../../node_modules/ol/source/Vector.js",
+      "file": "ol_source_Vector.js",
+      "fileHash": "a7ed6db9",
+      "needsInterop": false
+    },
+    "ol/style": {
+      "src": "../../node_modules/ol/style.js",
+      "file": "ol_style.js",
+      "fileHash": "92ff3601",
+      "needsInterop": false
+    },
+    "vue-router": {
+      "src": "../../node_modules/vue-router/dist/vue-router.mjs",
+      "file": "vue-router.js",
+      "fileHash": "ae4ce3a4",
+      "needsInterop": false
+    },
+    "vue": {
+      "src": "../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "file": "vue.js",
+      "fileHash": "a3b10869",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "BaseVector-CnmMXRCV": {
+      "file": "BaseVector-CnmMXRCV.js",
+      "isDynamicEntry": false
+    },
+    "Collection-DwxDWj5o": {
+      "file": "Collection-DwxDWj5o.js",
+      "isDynamicEntry": false
+    },
+    "Layer-CkA48-Ee": {
+      "file": "Layer-CkA48-Ee.js",
+      "isDynamicEntry": false
+    },
+    "Layer-CotuPRNK": {
+      "file": "Layer-CotuPRNK.js",
+      "isDynamicEntry": false
+    },
+    "Polygon-CwOeeBbl": {
+      "file": "Polygon-CwOeeBbl.js",
+      "isDynamicEntry": false
+    },
+    "Source-BH1Tmfee": {
+      "file": "Source-BH1Tmfee.js",
+      "isDynamicEntry": false
+    },
+    "Text-Dob7Y1Fx": {
+      "file": "Text-Dob7Y1Fx.js",
+      "isDynamicEntry": false
+    },
+    "TileState-BV9P4F7q": {
+      "file": "TileState-BV9P4F7q.js",
+      "isDynamicEntry": false
+    },
+    "View-CUp4qALX": {
+      "file": "View-CUp4qALX.js",
+      "isDynamicEntry": false
+    },
+    "asserts-DUNxUKpS": {
+      "file": "asserts-DUNxUKpS.js",
+      "isDynamicEntry": false
+    },
+    "chunk-BoAXSpZd": {
+      "file": "chunk-BoAXSpZd.js",
+      "isDynamicEntry": false
+    },
+    "color-CoT09zS8": {
+      "file": "color-CoT09zS8.js",
+      "isDynamicEntry": false
+    },
+    "contains-Bl5givOM": {
+      "file": "contains-Bl5givOM.js",
+      "isDynamicEntry": false
+    },
+    "easing-Ds8nYaIx": {
+      "file": "easing-Ds8nYaIx.js",
+      "isDynamicEntry": false
+    },
+    "intersectsextent-CRZ81NCr": {
+      "file": "intersectsextent-CRZ81NCr.js",
+      "isDynamicEntry": false
+    },
+    "math-BYtIDyQ8": {
+      "file": "math-BYtIDyQ8.js",
+      "isDynamicEntry": false
+    },
+    "obj-C0zdAnF3": {
+      "file": "obj-C0zdAnF3.js",
+      "isDynamicEntry": false
+    },
+    "orient-BQDaEeHr": {
+      "file": "orient-BQDaEeHr.js",
+      "isDynamicEntry": false
+    },
+    "proj-BYDU1skc": {
+      "file": "proj-BYDU1skc.js",
+      "isDynamicEntry": false
+    },
+    "rbush-CcdR7sho": {
+      "file": "rbush-CcdR7sho.js",
+      "isDynamicEntry": false
+    },
+    "size-DfTGL_qp": {
+      "file": "size-DfTGL_qp.js",
+      "isDynamicEntry": false
+    },
+    "tilecoord-6smnnFnG": {
+      "file": "tilecoord-6smnnFnG.js",
+      "isDynamicEntry": false
+    },
+    "vue.runtime.esm-bundler-CaV6uQJ2": {
+      "file": "vue.runtime.esm-bundler-CaV6uQJ2.js",
+      "isDynamicEntry": false
+    }
+  }
+}

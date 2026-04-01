@@ -1,39 +1,89 @@
-# markdown-vue3-examples
-
 #### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+
+**markdown-vue3** 是一个轻量、高效的 Markdown 渲染组件，基于 Vue 3 和 markdown-it 开发。  
+支持常见 Markdown 语法、代码高亮、**vue插槽写法**，**自定义规则** 适用于 **AI流式回答**、内容管理系统等场景。
 
 #### 软件架构
-软件架构说明
 
+- 基于 **Vue 3** 开发，使用 Composition API
+- 使用 **markdown-it** 作为 Markdown 解析器
+    - 支持自定义渲染规则
+    - 替换默认渲染规则
+
+#### 开发版本说明
+
+- `markdown-it`: `^14.1.1`
+- `markdown-it-container`: `^4.0.0`
+- `vue`: `^3.5.30`
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1. 安装依赖：
+   ``` bash
+   npm install markdown-vue3
+   ``` 
+
+2. 若需要代码高亮，请额外安装高亮库：
+   ```bash
+   npm install highlight.js
+   ```
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1. **全局注册组件**（在 \`main.js\` 中）：
+   ``` javascript
+   import { createApp } from 'vue'
+   import App from './App.vue'
+   import MarkdownVue3 from 'markdown-vue3';
+   // markdown-vue3 样式
+   import 'markdown-vue3/dist/markdown-vue3.css'
 
-#### 参与贡献
+   const app = createApp(App)
+   app.use(MarkdownVue3)
+   app.mount('#app')
+   ``` bash
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+2. **在组件中使用**：
+   ```vue
+   <template>
+      <div class="markdown-body">
+        <markdown-vue3 :md="md" :source="source"></markdown-vue3>
+      </div>
+   </template>
 
+   <script setup>
+   import { ref } from "vue"; 
+   import MarkdownIt from "markdown-it";
+
+   // 和正常使用的 MarkdownIt 实例一样使用
+
+   const md = new MarkdownIt({
+        html:true   
+   });
+   const source = ref("# 标题\\n\\n这是一段 **Markdown** 内容。");
+   </script>
+
+   ```
+
+3. **必须安装的插件**：
+   ```bash
+   npm install markdown-it-container
+   ```
+   ```javascript
+   
+   // 注意,不需要use 组件内部自动use注册
+   import MarkdownIt from 'markdown-it'
+
+   const md = new MarkdownIt({
+     html: true,
+   })
+   ```
 
 #### 特技
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+1. 使用 Readme_XXX.md 来支持不同的语言，例如 Readme_en.md, Readme_zh.md
+2. Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
+3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
+4. [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
+5. Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
+6. Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)]()
