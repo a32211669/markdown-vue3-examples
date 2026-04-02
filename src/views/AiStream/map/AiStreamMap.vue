@@ -8,7 +8,7 @@ import VectorSource from 'ol/source/Vector';
 import { fromLonLat } from 'ol/proj';
 import Feature from 'ol/Feature';
 import Polygon from 'ol/geom/Polygon';
-import { Fill, Stroke, Style } from 'ol/style';
+import { Fill, Stroke, Style, Text } from 'ol/style';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import type { GroupToken } from 'markdown-vue3';
 import { extractJsonFenceContent } from '../utils/extractJsonFenceContent';
@@ -76,7 +76,7 @@ function normalizeRing(paths: [number, number][]): [number, number][] {
   return [...paths, paths[0]];
 }
 
-function styleFromPolygonStyle(s?: PolygonStyle) {
+function styleFromPolygonStyle(s?: PolygonStyle, label?: string) {
   const strokeColor = s?.stroke ?? '#ff4d4f';
   const strokeWidth = typeof s?.strokeWidth === 'number' ? s.strokeWidth : 2;
   const fillColor = s?.fill ?? strokeColor;
@@ -85,6 +85,15 @@ function styleFromPolygonStyle(s?: PolygonStyle) {
   return new Style({
     stroke: new Stroke({ color: strokeColor, width: strokeWidth }),
     fill: new Fill({ color: applyAlpha(fillColor, fillOpacity) }),
+    text: label
+      ? new Text({
+          text: label,
+          font: '12px system-ui, -apple-system, Segoe UI, Roboto, Arial',
+          overflow: true,
+          fill: new Fill({ color: '#111827' }),
+          stroke: new Stroke({ color: 'rgba(255,255,255,0.85)', width: 3 }),
+        })
+      : undefined,
   });
 }
 
@@ -126,7 +135,7 @@ const applyPolygons = (data: MapData | null) => {
       name: poly.name ?? '',
       id: poly.id ?? '',
     });
-    feature.setStyle(styleFromPolygonStyle(poly.style));
+    feature.setStyle(styleFromPolygonStyle(poly.style, poly.name));
     vectorSource.addFeature(feature);
   }
 };
