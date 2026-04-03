@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
 import { computed, onBeforeUnmount, onMounted, ref, type Component } from 'vue';
-import { Box, Document, DocumentCopy, Expand, Fold, Histogram, InfoFilled, Picture, Warning } from '@element-plus/icons-vue';
+import { Box, Document, DocumentCopy, Expand, Fold, Histogram, InfoFilled, Picture } from '@element-plus/icons-vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -25,7 +25,6 @@ const menuItems: MenuItem[] = [
   { index: '/home/progress', label: '进度组件插槽', icon: Histogram },
   { index: '/home/thinking', label: '思考组件插槽', icon: Document },
   { index: '/home/ai-stream', label: 'AI流式回答', icon: Document },
-  { index: '/home/flood-defense', label: '山洪防御', icon: Warning },
 ];
 
 // 默认展开所有子菜单

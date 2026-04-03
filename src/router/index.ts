@@ -49,11 +49,6 @@ const router = createRouter({
           name: 'home-thinking',
           component: () => import('../views/Thinking/ThinkingView.vue'),
         },
-        {
-          path: 'flood-defense',
-          name: 'home-flood-defense',
-          component: () => import('../views/FloodDefense/FloodDefenseView.vue'),
-        },
       ],
     },
   ],
