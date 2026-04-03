@@ -7,8 +7,8 @@
 
 - 基于 **Vue 3** 开发，使用 Composition API
 - 使用 **markdown-it** 作为 Markdown 解析器
-    - 支持自定义渲染规则
-    - 替换默认渲染规则
+  - 支持自定义渲染规则
+  - 替换默认渲染规则
 
 #### 开发版本说明
 
@@ -19,9 +19,12 @@
 #### 安装教程
 
 1. 安装依赖：
-   ``` bash
-   npm install markdown-vue3
-   ``` 
+
+   ```bash
+   npm install @npm-brx/markdown-vue3
+   # 或
+   pnpm add @npm-brx/markdown-vue3
+   ```
 
 2. 若需要代码高亮，请额外安装高亮库：
    ```bash
@@ -29,56 +32,41 @@
    ```
 
 #### 使用说明
-
-1. **全局注册组件**（在 \`main.js\` 中）：
-   ``` javascript
-   import { createApp } from 'vue'
-   import App from './App.vue'
-   import MarkdownVue3 from 'markdown-vue3';
-   // markdown-vue3 样式
-   import 'markdown-vue3/dist/markdown-vue3.css'
-
-   const app = createApp(App)
-   app.use(MarkdownVue3)
-   app.mount('#app')
-   ``` bash
-
-2. **在组件中使用**：
    ```vue
    <template>
-      <div class="markdown-body">
-        <markdown-vue3 :md="md" :source="source"></markdown-vue3>
-      </div>
+     <div class="markdown-body">
+       <markdown-vue3 :md="md" :source="source"></markdown-vue3>
+     </div>
    </template>
 
    <script setup>
-   import { ref } from "vue"; 
-   import MarkdownIt from "markdown-it";
+   import { ref } from 'vue';
+   import MarkdownIt from 'markdown-it';
 
    // 和正常使用的 MarkdownIt 实例一样使用
 
    const md = new MarkdownIt({
-        html:true   
+     html: true,
    });
-   const source = ref("# 标题\\n\\n这是一段 **Markdown** 内容。");
+   const source = ref('# 标题\\n\\n这是一段 **Markdown** 内容。');
    </script>
-
    ```
 
 3. **必须安装的插件**：
+
    ```bash
    npm install markdown-it-container
    ```
+
    ```javascript
-   
    // 注意,不需要use 组件内部自动use注册
-   import MarkdownIt from 'markdown-it'
+   import MarkdownIt from 'markdown-it';
 
    const md = new MarkdownIt({
      html: true,
-   })
+   });
    ```
 
 #### 特技
 
-1.
+1. GitHub示例地址 https://github.com/a32211669/markdown-vue3-examples.git
