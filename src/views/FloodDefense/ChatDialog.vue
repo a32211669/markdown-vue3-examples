@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue';
 import MarkdownIt from 'markdown-it';
-import { MarkdownVue3 } from 'markdown-vue3';
+import { MarkdownVue3 } from '@npm-brx/markdown-vue3';
 
 type ChatMessage = {
   id: string;

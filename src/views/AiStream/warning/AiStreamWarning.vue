@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { GroupToken } from 'markdown-vue3';
+import type { GroupToken } from '@npm-brx/markdown-vue3';
 import { extractJsonFenceContent } from '../utils/extractJsonFenceContent';
 
 type WarningData = {

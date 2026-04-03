@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import MarkdownIt from 'markdown-it';
-import { MarkdownVue3, Renderer, type GroupToken } from 'markdown-vue3';
+import { MarkdownVue3, Renderer, type GroupToken } from '@npm-brx/markdown-vue3';
 import DemoSplitLayout from '../components/DemoSplitLayout.vue';
 
 const md = new MarkdownIt({

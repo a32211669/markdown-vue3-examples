@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import MarkdownIt from 'markdown-it';
-import { MarkdownVue3, Renderer } from 'markdown-vue3';
+import { MarkdownVue3, Renderer } from '@npm-brx/markdown-vue3';
 import DemoSplitLayout from '../../components/DemoSplitLayout.vue';
 
 const md = new MarkdownIt({ html: true });

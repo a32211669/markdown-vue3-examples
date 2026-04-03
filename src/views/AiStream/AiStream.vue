@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import MarkdownIt from 'markdown-it';
-import { MarkdownVue3 } from 'markdown-vue3';
+import { MarkdownVue3 } from '@npm-brx/markdown-vue3';
 
 import AiStreamMap from './map/AiStreamMap.vue';
 import AiStreamEchart from './echart/AiStreamEchart.vue';

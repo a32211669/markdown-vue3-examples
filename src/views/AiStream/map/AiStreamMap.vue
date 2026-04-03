@@ -10,7 +10,7 @@ import Feature from 'ol/Feature';
 import Polygon from 'ol/geom/Polygon';
 import { Fill, Stroke, Style, Text } from 'ol/style';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
-import type { GroupToken } from 'markdown-vue3';
+import type { GroupToken } from '@npm-brx/markdown-vue3';
 import { extractJsonFenceContent } from '../utils/extractJsonFenceContent';
 
 type PolygonStyle = {

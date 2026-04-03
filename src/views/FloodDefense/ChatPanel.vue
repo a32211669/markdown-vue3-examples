@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, nextTick, ref, watch } from 'vue';
 import MarkdownIt from 'markdown-it';
-import { MarkdownVue3 } from 'markdown-vue3';
-import AiStreamEchart from '../views/AiStream/echart/AiStreamEchart.vue';
-import AiStreamMap from '../views/AiStream/map/AiStreamMap.vue';
+import { MarkdownVue3 } from '@npm-brx/markdown-vue3';
+import AiStreamEchart from '../AiStream/echart/AiStreamEchart.vue';
+import AiStreamMap from '../AiStream/map/AiStreamMap.vue';
 
 type ChatMessage = {
   id: string;
@@ -101,16 +101,16 @@ async function send() {
     </header>
 
     <div ref="scrollRef" class="wx-chat__body">
-      <div v-for="m in messages" :key="m.id" class="wx-msg" :class="`is-${m.role}`">
-        <div class="wx-avatar" :class="`is-${m.role}`" aria-hidden="true">
+      <div v-for="m in messages" :key="m.id" :class="`is-${m.role}`" class="wx-msg">
+        <div :class="`is-${m.role}`" aria-hidden="true" class="wx-avatar">
           {{ m.role === 'user' ? '我' : 'AI' }}
         </div>
-        <div class="wx-bubble" :class="`is-${m.role}`">
+        <div :class="`is-${m.role}`" class="wx-bubble">
           <template v-if="m.role === 'user' && props.hideUserContent">
             <div class="wx-user-placeholder">已发送</div>
           </template>
           <template v-else>
-            <MarkdownVue3 :md="md" :source="m.content" :containers="props.containers">
+            <MarkdownVue3 :containers="props.containers" :md="md" :source="m.content">
               <template #container:chart="{ node }">
                 <AiStreamEchart :node="node" />
               </template>
@@ -126,13 +126,13 @@ async function send() {
     <footer class="wx-chat__footer">
       <input
         v-model="input"
-        class="wx-input"
-        type="text"
-        placeholder="输入问题，回车发送"
         :disabled="sending"
+        class="wx-input"
+        placeholder="输入问题，回车发送"
+        type="text"
         @keydown.enter.prevent="send"
       />
-      <button class="wx-send" type="button" :disabled="!canSend" @click="send">发送</button>
+      <button :disabled="!canSend" class="wx-send" type="button" @click="send">发送</button>
     </footer>
   </div>
 </template>
@@ -258,4 +258,3 @@ async function send() {
   cursor: not-allowed;
 }
 </style>
-

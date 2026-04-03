@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { Renderer, type GroupToken } from 'markdown-vue3';
+import { Renderer, type GroupToken } from '@npm-brx/markdown-vue3';
 
 /**
  * 与 markdown-vue3 内置 DefaultThinking 相同思路：

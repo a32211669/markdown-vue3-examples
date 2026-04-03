@@ -14,11 +14,11 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
+    "@npm-brx/markdown-vue3": "^1.0.0",
     "echarts": "^6.0.0",
     "element-plus": "^2.13.6",
     "github-markdown-css": "^5.9.0",
     "markdown-it": "^14.1.1",
-    "markdown-vue3": "file:markdown-vue3-1.0.0.tgz",
     "ol": "^10.8.0",
     "pinia": "^3.0.4",
     "vue": "^3.5.30",

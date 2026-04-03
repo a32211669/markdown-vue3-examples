@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import ChatPanel from '../../components/ChatPanel.vue';
+<script lang="ts" setup>
+import ChatPanel from './ChatPanel.vue';
 import { FLOOD_DEFENSE_MOCK, type FloodDefenseMockItem } from './mock';
 
 function normalizeQuestion(s: string): string {
@@ -26,7 +26,9 @@ function findMock(question: string): FloodDefenseMockItem | undefined {
 async function answerProvider(question: string): Promise<string> {
   const item = findMock(question);
   if (!item) {
-    return `未在 mock 中命中该问题。\n\n- 你的问题：${question}\n- 已收录问题：\n${FLOOD_DEFENSE_MOCK.map((m) => `  - ${m.answer}`).join('\n')}`;
+    return `未在 mock 中命中该问题。\n\n- 你的问题：${question}\n- 已收录问题：\n${FLOOD_DEFENSE_MOCK.map(
+      (m) => `  - ${m.answer}`,
+    ).join('\n')}`;
   }
   // mock 的问答内容严格保持原样，不做任何加工或追加
   return item.content;
@@ -42,8 +44,8 @@ async function answerProvider(question: string): Promise<string> {
 <style scoped>
 .flood-defense-page {
   height: 100%;
-  padding: 0;
-  margin: -16px -24px;
+  padding-left: 20%;
+  padding-right: 20%;
 }
 
 @media (max-width: 768px) {

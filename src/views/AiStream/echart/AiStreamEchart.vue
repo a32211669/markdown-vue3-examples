@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import * as echarts from 'echarts';
-import type { GroupToken } from 'markdown-vue3';
+import type { GroupToken } from '@npm-brx/markdown-vue3';
 import { extractJsonFenceContent } from '../utils/extractJsonFenceContent';
 
 type SeriesType = 'line' | 'bar';
