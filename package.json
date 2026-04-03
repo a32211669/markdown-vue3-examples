@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
-    "@npm-brx/markdown-vue3": "^1.0.0",
+    "@npm-brx/markdown-vue3": "^1.0.1",
     "echarts": "^6.0.0",
     "element-plus": "^2.13.6",
     "github-markdown-css": "^5.9.0",
