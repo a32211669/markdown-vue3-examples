@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue';
 import type { GroupToken } from '@npm-brx/markdown-vue3';
 import { extractJsonFenceContent } from '../utils/extractJsonFenceContent';
@@ -12,6 +12,7 @@ type TipData = {
 const props = defineProps<{
   node?: GroupToken;
 }>();
+
 console.log('tip');
 
 const data = computed<TipData | null>(() => {

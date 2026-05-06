@@ -1,113 +1,99 @@
-<script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+<script lang="ts" setup>
+import { computed, ref } from 'vue';
 import MarkdownIt from 'markdown-it';
-import { MarkdownVue3, Renderer } from '@npm-brx/markdown-vue3';
-import FixedThinkingAccumulate from './FixedThinkingAccumulate.vue';
+import type { FixedPanelExpose } from '@npm-brx/markdown-vue3';
+import { DefaultThinking, MarkdownVue3 } from '@npm-brx/markdown-vue3';
 import DemoSplitLayout from '../../components/DemoSplitLayout.vue';
 
 const md = new MarkdownIt({ html: true });
 
-/**
- * 流式追加多段 :::thinking；库内 DefaultThinking 会对 node 去重后按 _stableKey 累加到 tree，
- * 与 FixedThinkingAccumulate 行为一致。
- */
-const STREAM_CHUNKS = [
-  '## 流式思考演示\n\n模拟 **source** 一段段增长；每出现一段新的 `:::thinking`（新 _stableKey）会**累加**到同一固定区。\n\n',
-  ':::thinking\n第一段：检索上下文…\n:::\n\n',
-  ':::thinking\n第二段：调用工具…\n:::\n\n',
-  ':::thinking\n第三段：综合结论。\n:::\n\n',
-  '---\n\n正文：流式结束。\n',
-];
+const source = ref(
+  [
+    '## 思考面板演示',
+    '',
+    '正文会正常渲染；`:::thinking` 内容会进入固定区面板。',
+    '',
+    ':::thinking',
+    '这里是思考内容。',
+    '- 支持多行',
+    '- 支持 **Markdown**',
+    ':::',
+    '',
+    '---',
+    '',
+    '正文：结束。',
+    '',
+  ].join('\n'),
+);
 
-const source = ref('');
-const streamKey = ref(0);
-let timer: ReturnType<typeof setInterval> | null = null;
-const chunkDelayMs = 800;
+const activeTab = ref<'default' | 'title-slot'>('default');
 
-function clearTimer() {
-  if (timer) {
-    clearInterval(timer);
-    timer = null;
-  }
+const thinkingRef = ref<FixedPanelExpose | null>(null);
+
+function toggleThinkingCollapsed() {
+  const inst = thinkingRef.value;
+  if (!inst) return;
+  inst.setCollapsed(!inst.collapsed);
 }
 
-function runStream() {
-  clearTimer();
-  source.value = '';
-  let i = 0;
-  timer = setInterval(() => {
-    if (i >= STREAM_CHUNKS.length) {
-      clearTimer();
-      return;
-    }
-    source.value += STREAM_CHUNKS[i];
-    i++;
-  }, chunkDelayMs);
-}
+const coreCode = `// 思考容器（:::thinking）需要通过 containers 显式注册
+// 预览区用 <DefaultThinking /> 渲染固定区（fixed-thinking），并支持 title 插槽自定义标题栏
 
-function replay() {
-  streamKey.value += 1;
-  runStream();
-}
-
-onMounted(() => {
-  runStream();
-});
-
-onBeforeUnmount(() => {
-  clearTimer();
-});
-
-const coreCode = `// 流式：追加多段 :::thinking；自定义固定区按 _stableKey 累加（见 FixedThinkingAccumulate.vue）
-const source = ref('')
-
-<MarkdownVue3 :key="streamKey" :md="md" :source="source" :containers="['thinking']">
+<MarkdownVue3 :md="md" :source="source" :containers="['thinking']">
   <template #fixed-thinking="{ node }">
-    <FixedThinkingAccumulate :node="node" />
+    <DefaultThinking :node="node" />
   </template>
 </MarkdownVue3>
 
-// FixedThinkingAccumulate：watch(node)，未出现过的 _stableKey 则 tree.push(node)，
-// <Renderer :tree="tree" /> 与库内 DefaultThinking 一致。`;
+// 自定义 title 插槽时，如果想要折叠按钮，需要自己用 expose 来控制：
+// const thinkingRef = ref<FixedPanelExpose | null>(null)
+// thinkingRef.value?.setCollapsed(true/false)`;
 
 const demoCode = computed(
   () =>
-    `// ========== 流式 chunk（逐段追加到 source）==========\n\n` +
-    STREAM_CHUNKS.join('') +
-    `\n\n// ========== 集成要点（与库内 DefaultThinking 一致）==========\n\n` +
+    `// ========== 示例 Markdown（source）==========\n\n` +
+    source.value +
+    `\n\n// ========== 集成要点 ========== \n\n` +
     coreCode,
 );
 
 const noteItems = [
-  '容器语法：`:::thinking` … `:::`；不写则不显示思考固定区。',
-  '页面上只有一个 `#fixed-thinking`；多段 thinking 在自定义组件内按 `_stableKey` **累加**（见下方实现）。',
-  '本页用定时追加 `source` 模拟流式；可点「重新播放」。',
-  '内置 DefaultThinking 与 `FixedThinkingAccumulate.vue` 思路相同：`watch(node)` + `tree` + `<Renderer :tree="tree" />`。',
+  '需要显式注册容器：`<MarkdownVue3 :containers="[\'thinking\']" />`，否则 `:::thinking` 不会生效。',
+  '固定区插槽：使用 `#fixed-thinking` 渲染思考固定面板（默认用 `DefaultThinking`）。',
+  '`DefaultThinking` 通过 `defineExpose` 暴露 `setCollapsed()` 和 `collapsed`，便于外部控制折叠。',
+  '第二个 Tab 使用 `title` 插槽时，折叠按钮需要你自己实现（示例里通过 expose 控制）。',
 ];
 </script>
 
 <template>
   <div class="demo-page-shell">
-    <DemoSplitLayout title="思考组件插槽" :code="demoCode">
+    <DemoSplitLayout :code="demoCode" title="思考组件插槽">
       <template #note>
         <div class="split-note-title">说明</div>
         <ul>
           <li v-for="(t, i) in noteItems" :key="i">{{ t }}</li>
         </ul>
-        <div class="demo-replay-actions">
-          <el-button type="primary" size="small" @click="replay">重新播放流式</el-button>
-        </div>
       </template>
       <template #preview>
         <div class="markdown-body">
-          <MarkdownVue3 :key="streamKey" :md="md" :source="source" :containers="['thinking']">
-            <template #fixed-thinking="{ node }">
-              <FixedThinkingAccumulate :node="node" />
-            </template>
+          <el-tabs v-model="activeTab" class="thinking-tabs">
+            <el-tab-pane label="默认面板" name="default" />
+            <el-tab-pane label="title 插槽（自定义折叠按钮）" name="title-slot" />
+          </el-tabs>
 
-            <template #container:thinking="{ node }">
-              <div class="inline-hint">（正文区容器：{{ (node.open?.info || '').trim() || 'thinking' }}）</div>
-              <Renderer :tree="node.children" />
+          <MarkdownVue3 :containers="['thinking']" :md="md" :source="source">
+            <template #fixed-thinking="{ node }">
+              <DefaultThinking v-if="activeTab === 'default'" :node="node" />
+
+              <DefaultThinking v-else ref="thinkingRef" :node="node">
+                <template #title>
+                  <!-- 对齐库内默认 header 样式：.default-thinking header .title / .collapse-toggle -->
+                  <span class="title">思考（自定义 title 插槽）</span>
+                  <button class="collapse-toggle" type="button" @click="toggleThinkingCollapsed">
+                    {{ thinkingRef?.collapsed ? '展开' : '收起' }}
+                  </button>
+                </template>
+              </DefaultThinking>
             </template>
           </MarkdownVue3>
         </div>
@@ -117,8 +103,8 @@ const noteItems = [
 </template>
 
 <style scoped>
-.demo-replay-actions {
-  margin-top: 10px;
+.thinking-tabs {
+  margin-bottom: 10px;
 }
 
 .inline-hint {

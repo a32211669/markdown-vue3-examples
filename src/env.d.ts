@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import type { DefineComponent, SlotsType } from 'vue'
+import type { DefineComponent, SlotsType } from 'vue';
 
 declare module '*.vue' {
   const component: DefineComponent<
@@ -17,7 +17,6 @@ declare module '*.vue' {
     any,
     any,
     SlotsType<Record<string, any>>
-  >
-  export default component
+  >;
+  export default component;
 }
-

@@ -6,26 +6,42 @@
       <div class="aistream-note" role="note" aria-label="说明">
         <div class="aistream-note__title">说明</div>
         <ul class="aistream-note__list">
+          <li>本页演示 <b>AI 流式回答</b>：通过不断追加 <code>source</code> 来驱动渲染（更接近“打字机”效果）。</li>
           <li>
-            <b>进度（progress）</b>和<b>思考（thinking）</b>为默认容器；如果在 md 中不写 <code>:::progress</code> 或
-            <code>:::thinking</code>，页面就不会显示对应区块。
+            <b>进度（progress）</b>与<b>思考（thinking）</b>使用固定区插槽 <code>#fixed-progress</code> /
+            <code>#fixed-thinking</code> 渲染成面板；若 Markdown 中没有 <code>:::progress</code> 或
+            <code>:::thinking</code>，对应面板不会出现。
           </li>
           <li>
-            本页使用了 4 个<b>自定义容器插槽</b>：<code>container:map</code>、
-            <code>container:chart</code>、<code>container:tip</code>、<code>container:warning</code>。
+            本页注册了 4 个<b>自定义容器插槽</b>：<code>container:map</code> / <code>container:chart</code> /
+            <code>container:tip</code> / <code>container:warning</code>，并把 <code>node</code> 传给对应组件。
           </li>
           <li>
-            <b>AiStreamMap</b> / <b>AiStreamEchart</b> 演示了如何从 <code>node</code> 的 token 树中提取
-            <b>json fence</b>（<code>```json</code>）内容，并渲染成地图与图表。
+            <b>AiStreamMap</b> / <b>AiStreamEchart</b> / <b>AiStreamTip</b> / <b>AiStreamWarning</b> 会从
+            <code>node</code> 的 token 树中提取首个 <b>json fence</b>（<code>```json</code>）内容进行渲染。
           </li>
           <li>
-            为了保证体验、解析稳定与性能，自定义组件承载的 json 数据建议<b>一次性输出整块</b>（避免流式过程中出现“半截
-            JSON”与重复渲染）。
+            为了保证解析稳定与性能，建议结构化 json 数据<b>一次性输出整块</b>（避免流式过程中出现“半截
+            JSON”导致解析失败与重复渲染）。
           </li>
+          <li>页面默认会<b>贴底自动滚动</b>；当你手动上滑离开底部后会暂停贴底，滚回底部附近会自动恢复。</li>
         </ul>
       </div>
 
-      <MarkdownVue3 :containers="['map', 'chart', 'tip', 'warning']" :md="md" :sanitize="sanitize" :source="source">
+      <MarkdownVue3
+        :containers="['thinking', 'progress', 'map', 'chart', 'tip', 'warning']"
+        :md="md"
+        :sanitize="sanitize"
+        :source="source"
+      >
+        <template #fixed-progress="{ node }">
+          <DefaultProgress :node="node" />
+        </template>
+
+        <template #fixed-thinking="{ node }">
+          <DefaultThinking :node="node" />
+        </template>
+
         <template #container:map="{ node }">
           <AiStreamMap :node="node" />
         </template>
@@ -34,16 +50,12 @@
           <AiStreamEchart :node="node" />
         </template>
 
-        <template #container:tip>
-          <div class="tip-container">
-            <div class="tip-title">💡 提示</div>
-          </div>
+        <template #container:tip="{ node }">
+          <AiStreamTip :node="node" />
         </template>
 
-        <template #container:warning>
-          <div class="warning-container">
-            <div class="warning-title">⚠️ 注意</div>
-          </div>
+        <template #container:warning="{ node }">
+          <AiStreamWarning :node="node" />
         </template>
       </MarkdownVue3>
     </div>
@@ -53,10 +65,12 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import MarkdownIt from 'markdown-it';
-import { MarkdownVue3 } from '@npm-brx/markdown-vue3';
+import { DefaultProgress, DefaultThinking, MarkdownVue3 } from '@npm-brx/markdown-vue3';
 
 import AiStreamMap from './map/AiStreamMap.vue';
 import AiStreamEchart from './echart/AiStreamEchart.vue';
+import AiStreamTip from './tip/AiStreamTip.vue';
+import AiStreamWarning from './warning/AiStreamWarning.vue';
 
 // @ts-expect-error mock.js is a plain JS file (no TS typings in this repo)
 import mock from '../mock.js';

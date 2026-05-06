@@ -1,16 +1,16 @@
 //#region node_modules/ol/TileState.js
 /**
-* @module ol/TileState
-*/
+ * @module ol/TileState
+ */
 /**
-* @enum {number}
-*/
+ * @enum {number}
+ */
 var TileState_default = {
-	IDLE: 0,
-	LOADING: 1,
-	LOADED: 2,
-	ERROR: 3,
-	EMPTY: 4
+  IDLE: 0,
+  LOADING: 1,
+  LOADED: 2,
+  ERROR: 3,
+  EMPTY: 4,
 };
 //#endregion
 export { TileState_default as t };

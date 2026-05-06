@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useRoute, useRouter } from 'vue-router';
-import { computed, onBeforeUnmount, onMounted, ref, type Component } from 'vue';
+import { type Component, computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { Box, Document, DocumentCopy, Expand, Fold, Histogram, InfoFilled, Picture } from '@element-plus/icons-vue';
 
 const router = useRouter();
@@ -24,7 +24,7 @@ const menuItems: MenuItem[] = [
   { index: '/home/render-container', label: 'container插槽', icon: Box },
   { index: '/home/progress', label: '进度组件插槽', icon: Histogram },
   { index: '/home/thinking', label: '思考组件插槽', icon: Document },
-  { index: '/home/ai-stream', label: 'AI流式回答', icon: Document },
+  { index: '/home/ai-stream', label: 'AI流式回答完整demo', icon: Document },
 ];
 
 // 默认展开所有子菜单
@@ -88,13 +88,13 @@ onBeforeUnmount(() => {
   <div class="layout">
     <div v-if="isMobile && isSidebarOpen" class="layout-overlay" @click="closeSidebar" />
     <aside
-      class="layout-sidebar"
       :class="{ 'is-mobile': isMobile, 'is-open': isSidebarOpen }"
       :style="{ width: isMobile ? '240px' : isCollapsed ? '72px' : '240px' }"
+      class="layout-sidebar"
     >
       <div class="layout-sidebar-header">
-        <el-button class="layout-collapse-btn" :icon="isCollapsed ? Expand : Fold" circle @click="toggleCollapsed" />
-        <div class="layout-title" v-show="!isCollapsed">Markdown 示例</div>
+        <el-button :icon="isCollapsed ? Expand : Fold" circle class="layout-collapse-btn" @click="toggleCollapsed" />
+        <div v-show="!isCollapsed" class="layout-title">Markdown 示例</div>
       </div>
       <el-menu
         :collapse="!isMobile && isCollapsed"
@@ -106,15 +106,15 @@ onBeforeUnmount(() => {
         <template v-for="item in menuItems" :key="item.index">
           <el-sub-menu v-if="item.children" :index="item.index">
             <template #title>
-              <el-tooltip :content="item.label" placement="right" :disabled="!isCollapsed">
+              <el-tooltip :content="item.label" :disabled="!isCollapsed" placement="right">
                 <el-icon class="layout-menu-icon">
                   <component :is="item.icon" />
                 </el-icon>
               </el-tooltip>
-              <span class="layout-menu-text" v-show="!isCollapsed">{{ item.label }}</span>
+              <span v-show="!isCollapsed" class="layout-menu-text">{{ item.label }}</span>
             </template>
             <el-menu-item v-for="child in item.children" :key="child.index" :index="child.index">
-              <el-tooltip :content="child.label" placement="right" :disabled="!isCollapsed">
+              <el-tooltip :content="child.label" :disabled="!isCollapsed" placement="right">
                 <el-icon class="layout-menu-icon">
                   <component :is="child.icon" />
                 </el-icon>
@@ -123,19 +123,19 @@ onBeforeUnmount(() => {
             </el-menu-item>
           </el-sub-menu>
           <el-menu-item v-else :index="item.index">
-            <el-tooltip :content="item.label" placement="right" :disabled="!isCollapsed">
+            <el-tooltip :content="item.label" :disabled="!isCollapsed" placement="right">
               <el-icon class="layout-menu-icon">
                 <component :is="item.icon" />
               </el-icon>
             </el-tooltip>
-            <span class="layout-menu-text" v-show="!isCollapsed">{{ item.label }}</span>
+            <span v-show="!isCollapsed" class="layout-menu-text">{{ item.label }}</span>
           </el-menu-item>
         </template>
       </el-menu>
     </aside>
     <main class="layout-content">
       <div v-if="isMobile" class="mobile-topbar">
-        <el-button class="mobile-menu-btn" :icon="Expand" circle @click="toggleCollapsed" />
+        <el-button :icon="Expand" circle class="mobile-menu-btn" @click="toggleCollapsed" />
         <div class="mobile-topbar-title">Markdown 示例</div>
       </div>
       <router-view />

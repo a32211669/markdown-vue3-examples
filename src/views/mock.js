@@ -397,8 +397,8 @@ export default function (callback) {
     '> 本报告由山洪风险智能分析系统自动生成，如有疑问请联系应急指挥中心。\n',
   ];
 
-  // 逐字输出：更像真实“打字机”，这里故意放慢
-  const SPEED_CHAR_MS = 30;
+  // 逐字输出：更像真实“打字机”，
+  const SPEED_CHAR_MS = 10;
   // 普通块之间的间隔
   const SPEED_CHUNK_MS = 650;
   // 地图/图表块输出后：模拟“生成图表/地图需要时间”
