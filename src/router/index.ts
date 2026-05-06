@@ -40,6 +40,21 @@ const router = createRouter({
           component: () => import('../views/RenderContainerView.vue'),
         },
         {
+          path: 'render-container-map',
+          name: 'home-render-container-map',
+          component: () => import('../views/ContainerPages/ContainerMapView.vue'),
+        },
+        {
+          path: 'render-container-echart',
+          name: 'home-render-container-echart',
+          component: () => import('../views/ContainerPages/ContainerEchartView.vue'),
+        },
+        {
+          path: 'render-container-carousel',
+          name: 'home-render-container-carousel',
+          component: () => import('../views/ContainerPages/ContainerCarouselView.vue'),
+        },
+        {
           path: 'progress',
           name: 'home-progress',
           component: () => import('../views/Progress/ProgressView.vue'),

@@ -2,7 +2,7 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import * as echarts from 'echarts';
 import type { GroupToken } from '@npm-brx/markdown-vue3';
-import { extractJsonFenceContent } from '../../../utils/extractJsonFenceContent';
+import { extractJsonFenceContent } from '../../utils/extractJsonFenceContent';
 
 type SeriesType = 'line' | 'bar';
 
@@ -14,12 +14,10 @@ type SeriesData = {
 
 type ChartData =
   | {
-      // new shape
       xAxis: string[];
       series: SeriesData[];
     }
   | {
-      // legacy shape (backward compatible)
       time: string[];
       riskIndex: number[];
     };
@@ -33,7 +31,6 @@ let chart: echarts.ECharts | null = null;
 let ro: ResizeObserver | null = null;
 
 const getChartData = (node: any): ChartData | null => {
-  // 从 token 树里提取 json fence 的内容；拿不到就不渲染
   const jsonContent = extractJsonFenceContent(node?.children);
   if (!jsonContent) return null;
 
@@ -41,7 +38,6 @@ const getChartData = (node: any): ChartData | null => {
     const parsed = JSON.parse(jsonContent.trim());
     if (!parsed) return null;
 
-    // New: { xAxis: string[], series: [{type:'line'|'bar', data:number[], name?}] }
     if (
       Array.isArray(parsed.xAxis) &&
       parsed.xAxis.every((x: any) => typeof x === 'string') &&
@@ -59,7 +55,6 @@ const getChartData = (node: any): ChartData | null => {
       return parsed as ChartData;
     }
 
-    // Legacy: { time: string[], riskIndex: number[] }
     if (
       Array.isArray(parsed.time) &&
       Array.isArray(parsed.riskIndex) &&
@@ -89,29 +84,15 @@ const buildEchartOption = (data: ChartData) => {
   const normalized = toNewShape(data);
   return {
     title: {
-      text: '风险趋势预测',
+      text: '静态数据演示',
       left: 'center',
       textStyle: { fontSize: 14 },
     },
-    tooltip: {
-      trigger: 'axis',
-    },
-    legend: {
-      top: 26,
-    },
-    grid: {
-      left: 40,
-      right: 20,
-      top: 50,
-      bottom: 30,
-    },
-    xAxis: {
-      type: 'category',
-      data: normalized.xAxis,
-    },
-    yAxis: {
-      type: 'value',
-    },
+    tooltip: { trigger: 'axis' },
+    legend: { top: 26 },
+    grid: { left: 40, right: 20, top: 50, bottom: 30 },
+    xAxis: { type: 'category', data: normalized.xAxis },
+    yAxis: { type: 'value' },
     series: normalized.series.map((s) => {
       if (s.type === 'line') {
         return {
@@ -141,7 +122,6 @@ const render = () => {
   if (!chart) {
     chart = echarts.init(chartContainer.value);
   }
-
   chart.setOption(buildEchartOption(data), true);
 };
 
@@ -149,9 +129,7 @@ onMounted(() => {
   if (!chartContainer.value) return;
 
   if (typeof ResizeObserver !== 'undefined') {
-    ro = new ResizeObserver(() => {
-      chart?.resize();
-    });
+    ro = new ResizeObserver(() => chart?.resize());
     ro.observe(chartContainer.value);
   }
 
@@ -187,3 +165,4 @@ onBeforeUnmount(() => {
   background: #fafafa;
 }
 </style>
+

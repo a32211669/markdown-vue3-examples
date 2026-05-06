@@ -21,7 +21,17 @@ const menuItems: MenuItem[] = [
 
   { index: '/home/render-tag', label: 'tag插槽', icon: Picture },
   { index: '/home/render-fence', label: 'fence插槽', icon: DocumentCopy },
-  { index: '/home/render-container', label: 'container插槽', icon: Box },
+  {
+    index: '/home/container',
+    label: 'container插槽',
+    icon: Box,
+    children: [
+      { index: '/home/render-container', label: '介绍', icon: InfoFilled },
+      { index: '/home/render-container-map', label: '结合 map', icon: Picture },
+      { index: '/home/render-container-echart', label: '结合 echart', icon: Histogram },
+      { index: '/home/render-container-carousel', label: '结合轮播图', icon: Picture },
+    ],
+  },
   { index: '/home/progress', label: '进度组件插槽', icon: Histogram },
   { index: '/home/thinking', label: '思考组件插槽', icon: Document },
   { index: '/home/ai-stream', label: 'AI流式回答完整demo', icon: Document },
