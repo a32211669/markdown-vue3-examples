@@ -29,4 +29,3 @@ export function extractJsonFenceContent(tokens: unknown): string | null {
 
   return null;
 }
-

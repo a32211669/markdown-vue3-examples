@@ -116,4 +116,3 @@ const items = computed(() => parsed.value?.items ?? []);
   font-size: 13px;
 }
 </style>
-

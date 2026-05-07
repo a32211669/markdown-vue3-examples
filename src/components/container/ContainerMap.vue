@@ -145,10 +145,7 @@ onMounted(() => {
 
   map = new Map({
     target: mapContainer.value,
-    layers: [
-      new TileLayer({ source: new OSM() }),
-      vectorLayer,
-    ],
+    layers: [new TileLayer({ source: new OSM() }), vectorLayer],
     view: new View({
       center: data ? fromLonLat(data.center) : fromLonLat(DEFAULT_CENTER_LON_LAT),
       zoom: data ? data.zoom : DEFAULT_ZOOM,
@@ -185,4 +182,3 @@ onBeforeUnmount(() => {
   background: #fafafa;
 }
 </style>
-

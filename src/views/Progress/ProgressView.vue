@@ -46,6 +46,9 @@ const placeholderSource = [
 
 const activeTab = ref<'default' | 'title-slot' | 'placeholder-slot'>('default');
 
+/** 默认面板：是否显示固定区标题栏（库支持 showHeader / 模板 :show-header） */
+const showDefaultProgressHeader = ref(true);
+
 const placeholderPhase = ref<'placeholder' | 'content'>('content');
 let placeholderTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -94,7 +97,7 @@ const coreCode = `// 进度容器（:::progress）需要通过 containers 显式
 
 <MarkdownVue3 :md="md" :source="source" :containers="['progress']">
   <template #fixed-progress="{ node }">
-    <DefaultProgress :node="node" />
+    <DefaultProgress :node="node" :show-header="showDefaultProgressHeader" />
   </template>
 </MarkdownVue3>
 
@@ -114,6 +117,7 @@ const noteItems = [
   '需要显式注册容器：`<MarkdownVue3 :containers="[\'progress\']" />`，否则 `:::progress` 不会生效。',
   '固定区插槽：使用 `#fixed-progress` 渲染进度固定面板（默认用 `DefaultProgress`）。',
   '`DefaultProgress` 通过 `defineExpose` 暴露 `setCollapsed()` 和 `collapsed`，便于外部控制折叠。',
+  '默认面板可用 `show-header`（`:show-header`）控制是否渲染标题栏；示例用按钮切换。',
   '第二个 Tab 使用 `title` 插槽时，折叠按钮需要你自己实现（示例里通过 expose 控制）。',
   '第三个 Tab 演示 `placeholder` 插槽：用空的 `:::progress` 触发占位渲染，并自定义占位样式。',
 ];
@@ -136,6 +140,17 @@ const noteItems = [
             <el-tab-pane label="placeholder 插槽（自定义样式）" name="placeholder-slot" />
           </el-tabs>
 
+          <div v-if="activeTab === 'default'" class="default-panel-toolbar">
+            <el-button
+              size="small"
+              type="primary"
+              plain
+              @click="showDefaultProgressHeader = !showDefaultProgressHeader"
+            >
+              {{ showDefaultProgressHeader ? '隐藏标题' : '显示标题' }}
+            </el-button>
+          </div>
+
           <MarkdownVue3
             :key="`${activeTab}-${placeholderPhase}`"
             :containers="['progress']"
@@ -143,23 +158,27 @@ const noteItems = [
             :source="currentSource"
           >
             <template #fixed-progress="{ node }">
-              <DefaultProgress v-if="activeTab === 'default'" :node="node" />
+              <DefaultProgress v-if="activeTab === 'default'" :node="node" :show-header="showDefaultProgressHeader" />
 
               <DefaultProgress v-else-if="activeTab === 'title-slot'" ref="progressRef" :node="node">
                 <template #title>
-                  <span class="title">进度（自定义 title 插槽）</span>
-                  <button class="collapse-toggle" type="button" @click="toggleProgressCollapsed">
-                    {{ progressRef?.collapsed ? '展开' : '收起' }}
-                  </button>
+                  <div class="demo-slotted-title">
+                    <span class="demo-slotted-title__label">进度（自定义 title 插槽）</span>
+                    <button class="demo-slotted-title__toggle" type="button" @click="toggleProgressCollapsed">
+                      {{ progressRef?.collapsed ? '展开' : '收起' }}
+                    </button>
+                  </div>
                 </template>
               </DefaultProgress>
 
               <DefaultProgress v-else ref="progressRef" :node="node">
                 <template #title>
-                  <span class="title">进度（placeholder 演示）</span>
-                  <button class="collapse-toggle" type="button" @click="toggleProgressCollapsed">
-                    {{ progressRef?.collapsed ? '展开' : '收起' }}
-                  </button>
+                  <div class="demo-slotted-title">
+                    <span class="demo-slotted-title__label">进度（placeholder 演示）</span>
+                    <button class="demo-slotted-title__toggle" type="button" @click="toggleProgressCollapsed">
+                      {{ progressRef?.collapsed ? '展开' : '收起' }}
+                    </button>
+                  </div>
                 </template>
 
                 <template #placeholder>
@@ -194,6 +213,48 @@ const noteItems = [
 <style scoped>
 .progress-tabs {
   margin-bottom: 10px;
+}
+
+.default-panel-toolbar {
+  margin: 0 0 10px;
+}
+
+/* title 插槽内收起按钮：示例页自有样式，不依赖库内 class 名 */
+.demo-slotted-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 32px;
+}
+
+.demo-slotted-title__label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #111827;
+  line-height: 1.3;
+}
+
+.demo-slotted-title__toggle {
+  flex-shrink: 0;
+  padding: 4px 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.demo-slotted-title__toggle:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+}
+
+.demo-slotted-title__toggle:active {
+  transform: translateY(0.5px);
 }
 
 .my-placeholder {

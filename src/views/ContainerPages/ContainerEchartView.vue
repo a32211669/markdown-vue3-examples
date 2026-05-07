@@ -64,4 +64,3 @@ const noteItems = computed(() => [
     </DemoSplitLayout>
   </div>
 </template>
-
