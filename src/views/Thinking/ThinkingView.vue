@@ -14,9 +14,13 @@ const source = ref(
     '正文会正常渲染；`:::thinking` 内容会进入固定区面板。',
     '',
     ':::thinking',
-    '这里是思考内容。',
+    '这里是第一段思考内容。',
     '- 支持多行',
     '- 支持 **Markdown**',
+    ':::',
+    '',
+    ':::thinking',
+    '第二段思考会合并到同一面板（2.0 `contents` 数组）。',
     ':::',
     '',
     '---',
@@ -43,8 +47,8 @@ const coreCode = `// 思考容器（:::thinking）需要通过 containers 显式
 // 预览区用 <DefaultThinking /> 渲染固定区（fixed-thinking），并支持 title 插槽自定义标题栏
 
 <MarkdownVue3 :md="md" :source="source" :containers="['thinking']">
-  <template #fixed-thinking="{ node }">
-    <DefaultThinking :node="node" :show-header="showDefaultThinkingHeader" />
+  <template #fixed-thinking="{ contents }">
+    <DefaultThinking :contents="contents" :show-header="showDefaultThinkingHeader" />
   </template>
 </MarkdownVue3>
 
@@ -62,7 +66,7 @@ const demoCode = computed(
 
 const noteItems = [
   '需要显式注册容器：`<MarkdownVue3 :containers="[\'thinking\']" />`，否则 `:::thinking` 不会生效。',
-  '固定区插槽：使用 `#fixed-thinking` 渲染思考固定面板（默认用 `DefaultThinking`）。',
+  '固定区插槽：使用 `#fixed-thinking="{ contents }"` 渲染思考固定面板（2.0 起为字符串数组）。',
   '`DefaultThinking` 通过 `defineExpose` 暴露 `setCollapsed()` 和 `collapsed`，便于外部控制折叠。',
   '默认面板可用 `show-header`（`:show-header`）控制是否渲染标题栏；示例用按钮切换。',
   '第二个 Tab 使用 `title` 插槽时，折叠按钮需要你自己实现（示例里通过 expose 控制）。',
@@ -97,10 +101,10 @@ const noteItems = [
           </div>
 
           <MarkdownVue3 :containers="['thinking']" :md="md" :source="source">
-            <template #fixed-thinking="{ node }">
-              <DefaultThinking v-if="activeTab === 'default'" :node="node" :show-header="showDefaultThinkingHeader" />
+            <template #fixed-thinking="{ contents }">
+              <DefaultThinking v-if="activeTab === 'default'" :contents="contents" :show-header="showDefaultThinkingHeader" />
 
-              <DefaultThinking v-else ref="thinkingRef" :node="node">
+              <DefaultThinking v-else ref="thinkingRef" :contents="contents">
                 <template #title>
                   <div class="demo-slotted-title">
                     <span class="demo-slotted-title__label">思考（自定义 title 插槽）</span>

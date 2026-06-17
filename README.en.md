@@ -1,75 +1,57 @@
 #### Introduction
 
-**markdown-vue3** is a lightweight and efficient Markdown rendering component built with Vue 3 and markdown-it.  
-It supports common Markdown syntax, code highlighting, **Vue slot-based usage**, and **custom rules**, making it suitable for **AI streaming responses**, content management systems, and similar scenarios.
+This repo is the demo project for [@npm-brx/markdown-vue3](https://www.npmjs.com/package/@npm-brx/markdown-vue3) **2.0.0**, covering thinking/progress panels, custom containers, and AI streaming.
 
-#### Architecture
+#### Versions
 
-- Built on **Vue 3** with the Composition API
-- Uses **markdown-it** as the Markdown parser
-  - Supports custom rendering rules
-  - Allows overriding default render rules
-
-#### Versions used in development
-
+- `@npm-brx/markdown-vue3`: `2.0.0`
 - `markdown-it`: `^14.1.1`
 - `markdown-it-container`: `^4.0.0`
 - `vue`: `^3.5.30`
 
-#### Installation
-
-1. Install the package:
-
-   ```bash
-   npm install @npm-brx/markdown-vue3
-   # or
-   pnpm add @npm-brx/markdown-vue3
-   ```
-
-2. If you need code highlighting, install a highlight library (for example `highlight.js`):
-
-   ```bash
-   npm install highlight.js
-   ```
-
-#### Basic usage
-
-```vue
-<template>
-  <div class="markdown-body">
-    <markdown-vue3 :md="md" :source="source" />
-  </div>
-</template>
-
-<script setup>
-import { ref } from 'vue';
-import MarkdownIt from 'markdown-it';
-
-// Use MarkdownIt the same way as in normal projects
-const md = new MarkdownIt({
-  html: true,
-});
-
-const source = ref('# Title\\n\\nThis is a piece of **Markdown** content.');
-</script>
-```
-
-#### Required plugin
+#### Install & run
 
 ```bash
-npm install markdown-it-container
+npm install
+npm run dev
 ```
 
-```javascript
-// Note: you do NOT need to manually call md.use(container)
-// The component will register containers internally when needed.
-import MarkdownIt from 'markdown-it';
+#### Demo pages
 
-const md = new MarkdownIt({
-  html: true,
-});
+| Route | Description |
+|-------|-------------|
+| Thinking | `#fixed-thinking="{ contents }"` + `DefaultThinking` |
+| Progress | `#fixed-progress="{ nodes }"` + `DefaultProgress` |
+| AI stream | Simulated streaming `source` with fixed panels |
+| Containers | Custom `#container:*` slots (map, echart, carousel) |
+
+#### Fixed-area API in 2.0 (breaking vs 1.x)
+
+| Slot | 2.0 props | Component |
+|------|-----------|-----------|
+| `#fixed-thinking` | `{ contents: string[] }` | `DefaultThinking :contents` |
+| `#fixed-progress` | `{ nodes: GroupToken[] }` | `DefaultProgress :nodes` |
+
+```vue
+<MarkdownVue3 :md="md" :source="source" :containers="['thinking', 'progress']">
+  <template #fixed-thinking="{ contents }">
+    <DefaultThinking :contents="contents" />
+  </template>
+  <template #fixed-progress="{ nodes }">
+    <DefaultProgress :nodes="nodes" />
+  </template>
+</MarkdownVue3>
 ```
 
-#### Extras
+#### Dependency injection
 
-1. GitHub example project: https://github.com/a32211669/markdown-vue3-examples.git
+`MarkdownVue3` provides the markdown-it instance via `provide('md', md)`. Custom components inside slots can use `inject('md')` instead of prop drilling; with `:sanitize` set, also use `inject('sanitizeHtml')`.
+
+#### Security
+
+The component renders HTML via `v-html`. Pass `:sanitize` for untrusted input (e.g. DOMPurify).
+
+#### Links
+
+- npm: https://www.npmjs.com/package/@npm-brx/markdown-vue3
+- GitHub: https://github.com/a32211669/markdown-vue3-examples.git

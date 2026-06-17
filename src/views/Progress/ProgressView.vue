@@ -96,8 +96,8 @@ const coreCode = `// 进度容器（:::progress）需要通过 containers 显式
 // 预览区用 <DefaultProgress /> 渲染固定区（fixed-progress），并支持 title/placeholder 插槽
 
 <MarkdownVue3 :md="md" :source="source" :containers="['progress']">
-  <template #fixed-progress="{ node }">
-    <DefaultProgress :node="node" :show-header="showDefaultProgressHeader" />
+  <template #fixed-progress="{ nodes }">
+    <DefaultProgress :nodes="nodes" :show-header="showDefaultProgressHeader" />
   </template>
 </MarkdownVue3>
 
@@ -115,7 +115,7 @@ const demoCode = computed(
 
 const noteItems = [
   '需要显式注册容器：`<MarkdownVue3 :containers="[\'progress\']" />`，否则 `:::progress` 不会生效。',
-  '固定区插槽：使用 `#fixed-progress` 渲染进度固定面板（默认用 `DefaultProgress`）。',
+  '固定区插槽：使用 `#fixed-progress="{ nodes }"` 渲染进度固定面板（2.0 起为 progress 块数组，显示最后一个）。',
   '`DefaultProgress` 通过 `defineExpose` 暴露 `setCollapsed()` 和 `collapsed`，便于外部控制折叠。',
   '默认面板可用 `show-header`（`:show-header`）控制是否渲染标题栏；示例用按钮切换。',
   '第二个 Tab 使用 `title` 插槽时，折叠按钮需要你自己实现（示例里通过 expose 控制）。',
@@ -157,10 +157,10 @@ const noteItems = [
             :md="md"
             :source="currentSource"
           >
-            <template #fixed-progress="{ node }">
-              <DefaultProgress v-if="activeTab === 'default'" :node="node" :show-header="showDefaultProgressHeader" />
+            <template #fixed-progress="{ nodes }">
+              <DefaultProgress v-if="activeTab === 'default'" :nodes="nodes" :show-header="showDefaultProgressHeader" />
 
-              <DefaultProgress v-else-if="activeTab === 'title-slot'" ref="progressRef" :node="node">
+              <DefaultProgress v-else-if="activeTab === 'title-slot'" ref="progressRef" :nodes="nodes">
                 <template #title>
                   <div class="demo-slotted-title">
                     <span class="demo-slotted-title__label">进度（自定义 title 插槽）</span>
@@ -171,7 +171,7 @@ const noteItems = [
                 </template>
               </DefaultProgress>
 
-              <DefaultProgress v-else ref="progressRef" :node="node">
+              <DefaultProgress v-else ref="progressRef" :nodes="nodes">
                 <template #title>
                   <div class="demo-slotted-title">
                     <span class="demo-slotted-title__label">进度（placeholder 演示）</span>

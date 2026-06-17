@@ -8,8 +8,8 @@
         <ul class="aistream-note__list">
           <li>本页演示 <b>AI 流式回答</b>：通过不断追加 <code>source</code> 来驱动渲染（更接近“打字机”效果）。</li>
           <li>
-            <b>进度（progress）</b>与<b>思考（thinking）</b>使用固定区插槽 <code>#fixed-progress</code> /
-            <code>#fixed-thinking</code> 渲染成面板；若 Markdown 中没有 <code>:::progress</code> 或
+            <b>进度（progress）</b>与<b>思考（thinking）</b>使用固定区插槽 <code>#fixed-progress="{ nodes }"</code> /
+            <code>#fixed-thinking="{ contents }"</code> 渲染成面板；若 Markdown 中没有 <code>:::progress</code> 或
             <code>:::thinking</code>，对应面板不会出现。
           </li>
           <li>
@@ -34,12 +34,12 @@
         :sanitize="sanitize"
         :source="source"
       >
-        <template #fixed-progress="{ node }">
-          <DefaultProgress :node="node" />
+        <template #fixed-progress="{ nodes }">
+          <DefaultProgress :nodes="nodes" />
         </template>
 
-        <template #fixed-thinking="{ node }">
-          <DefaultThinking :node="node" />
+        <template #fixed-thinking="{ contents }">
+          <DefaultThinking :contents="contents" />
         </template>
 
         <template #container:map="{ node }">
